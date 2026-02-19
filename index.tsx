@@ -2,12 +2,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './index.css';
 
-// Dynamically load Google Maps script with the provided API key
+// Proteção para evitar erros em ambientes onde o process.env ainda não foi injetado
+const getApiKey = () => {
+  try {
+    return process.env.API_KEY || '';
+  } catch (e) {
+    return '';
+  }
+};
+
 const loadGoogleMaps = () => {
-  if (document.querySelector('script[src*="maps.googleapis.com"]')) return;
+  const apiKey = getApiKey();
+  if (!apiKey || document.querySelector('script[src*="maps.googleapis.com"]')) return;
+  
   const script = document.createElement('script');
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.API_KEY}`;
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
   script.async = true;
   script.defer = true;
   document.head.appendChild(script);
@@ -16,13 +27,11 @@ const loadGoogleMaps = () => {
 loadGoogleMaps();
 
 const rootElement = document.getElementById('root');
-if (!rootElement) {
-  throw new Error("Could not find root element to mount to");
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
 }
-
-const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
