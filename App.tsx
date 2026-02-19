@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { INITIAL_CHURCHES } from './constants';
 import { Church } from './types';
-import LandingPage from './components/LandingPage.tsx';
-import Dashboard from './components/Dashboard.tsx';
-import AdminLogin from './components/AdminLogin.tsx';
-import MapModal from './components/MapModal.tsx';
-import AIChat from './components/AIChat.tsx';
+import LandingPage from './LandingPage';
+import Dashboard from './Dashboard';
+import AdminLogin from './AdminLogin';
+import MapModal from './MapModal';
+import AIChat from './AIChat';
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<'home' | 'dashboard' | 'admin-login'>('home');
@@ -16,7 +16,6 @@ const App: React.FC = () => {
   const [selectedChurchForMap, setSelectedChurchForMap] = useState<Church | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  // Persistence
   useEffect(() => {
     const savedFavs = localStorage.getItem('aiceb_favs');
     if (savedFavs) setFavorites(JSON.parse(savedFavs));
@@ -47,7 +46,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen gradient-bg text-slate-900 selection:bg-blue-100 selection:text-blue-700">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       {currentScreen === 'home' && (
         <LandingPage onEnter={() => navigateTo('dashboard')} />
       )}
@@ -67,10 +66,9 @@ const App: React.FC = () => {
             onDelete={handleDeleteChurch}
           />
           
-          {/* Botão Flutuante do Chat de IA */}
           <button 
             onClick={() => setIsChatOpen(true)}
-            className="fixed bottom-8 right-8 w-16 h-16 bg-blue-600 text-white rounded-full shadow-2xl shadow-blue-600/40 flex items-center justify-center text-2xl hover:scale-110 active:scale-95 transition-all z-[140] border-4 border-white"
+            className="fixed bottom-8 right-8 w-16 h-16 bg-blue-600 text-white rounded-full shadow-2xl flex items-center justify-center text-2xl hover:scale-110 active:scale-95 transition-all z-[140] border-4 border-white"
           >
             ✨
           </button>
