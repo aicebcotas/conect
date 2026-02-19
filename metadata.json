@@ -1,0 +1,7 @@
+{
+  "name": "AICEBCONECTA",
+  "description": "Uma plataforma completa para localizar e gerenciar as igrejas da AICEB (Aliança das Igrejas Cristã Evangélicos do Brasil), com mapas integrados.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
